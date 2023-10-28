@@ -12,21 +12,22 @@ void put_display_array(char *q[], int size);
 
 int main(){
     
-    char *matrix[]={
+   char *matrix[]={
         "lucas",
         "rita",
         "josé",
         "fabricio"
     };
 
+   
+
     int size = sizeof(matrix) / sizeof(matrix[0]);
 
     put_display_array( matrix, size);
     display_array( matrix, size);
 
-
     
-
+    
     return 0;
 }
 
@@ -36,7 +37,9 @@ int main(){
 
 void put_display_array(char *q[], int size) {
     for (int i = 0; i < size; i++) {
+
         char *currentString = q[i];
+
         while (*currentString) {
             putchar(*currentString);
             currentString++;
