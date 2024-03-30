@@ -17,7 +17,7 @@ typedef struct dict {
 void limparBuffer();
 
 void addLivros(dict **ini) ;
-void delet(dict **ini, char *key, char *value );
+void delet(dict **ini);
 void freeDictionary(dict *head);
 
 
@@ -33,7 +33,7 @@ int main(){
 
     while (true)
     {
-        printf("\n1 para listar : 2 para inserir: ");
+        printf("\n1 para listar : 2 para inserir 3 para deletar: ");
         scanf("%i",&op);
         limparBuffer();
         
@@ -46,8 +46,15 @@ int main(){
         case 2:
             addLivros(&Livro);
             break;
+        case 3:
+    {
+        
+        delet(&Livro);
+        break;
+    }
+
         default:
-            printf("\nDigito errado! digite 1 ou 2");
+            printf("\nDigito errado! digite 1 ou 2 ou 3");
             break;
         }
 
@@ -113,9 +120,43 @@ void addLivros(dict **ini) {
     }
 }
 
-void delet(dict **ini, char *key, char *value ){
+void delet(dict **ini ){
+    char key[MAX_KEY_LEN];
+    dict *temp = *ini;
+    dict *anterior = NULL;
+    
+   
 
+    if(*ini == NULL){
+        printf("\nLista está vazia");
+        return;
+    }
 
+    if(!temp){
+        printf("\nErro ao tentar alocar memoria!");
+        exit(1);
+    }
+
+    printf("\nNome do livro: ");
+    fgets(key,MAX_KEY_LEN,stdin);
+    limparBuffer();
+
+     while (temp != NULL) {
+        if (strcmp(temp->chave, key) == 0) {
+            // Verifica se o nó a ser deletado é o primeiro da lista
+            if (anterior == NULL) {
+                *ini = temp->next;
+            } else {
+                anterior->next = temp->next;
+            }
+            free(temp); // Libera a memória alocada para o nó a ser deletado
+            break;
+        }
+        anterior = temp;
+        temp = temp->next;
+    }
+
+    
 }
 
 // Adicione uma função para liberar toda a estrutura do dicionário (implementação omitida por brevidade)
