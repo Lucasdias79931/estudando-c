@@ -14,6 +14,24 @@ void Capitalize(char *str) {
     }
 }
 
+int count(const char *str, const char *substr){
+    if(strlen(substr) > strlen(str))return 0;
+
+    int occurrence = 0;
+    int sizeSub = strlen(substr);
+
+    int i = 0;
+    for (i = 0; i <= strlen(str) - sizeSub; i++) {
+        // Verifica se a substring atual coincide com a substring procurada
+        if (strncmp(&str[i], substr, sizeSub) == 0) {
+            occurrence++;
+            i += sizeSub - 1; // Avança para evitar contagens sobrepostas
+        }
+    }
+
+    return occurrence;
+}
+
 
 
 int main() {
@@ -25,5 +43,8 @@ int main() {
     Capitalize(str);
 
     printf("\n%s\n",str);*/
+
+    char str[] = "lucas dos santos dias lucas dias santos    lulucascas dos santos dias";
+    printf("\n%d\n",count(str,"lucas"));
     return 0;
 }
