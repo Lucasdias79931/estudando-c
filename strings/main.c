@@ -32,7 +32,17 @@ int count(const char *str, const char *substr){
     return occurrence;
 }
 
-
+// como strlen funciona
+int len(const char *str){
+    int len = 0;
+    while (*str)
+    {
+        len++;
+        *str++;
+    }
+    return len;
+    
+}
 
 int main() {
    /* char *palavra = join("lucas dos santos dias", "-");
@@ -44,7 +54,10 @@ int main() {
 
     printf("\n%s\n",str);*/
 
-    char str[] = "lucas dos santos dias lucas dias santos    lulucascas dos santos dias";
-    printf("\n%d\n",count(str,"lucas"));
+    /*char str[] = "lucas dos santos dias lucas dias santos    lulucascas dos santos dias";
+    printf("\n%d\n",count(str,"lucas"));*/
+    /*char str[] = "lucas";
+    
+    printf("\n%i\n",len(str));*/
     return 0;
 }
