@@ -23,7 +23,7 @@ Data *createBook(const char *book, int year);
 bool isEmpty(No *List);
 void push(No **ini, Data *data, End **end);
 void print(No *ini);
-
+ 
 int main() {
     No *bookList = NULL;
     End *endList = NULL;

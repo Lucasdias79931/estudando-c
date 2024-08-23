@@ -42,6 +42,8 @@ int main(){
 
     Stack *stack = (Stack *) malloc(sizeof(Stack));
     if(stack == NULL)exit(1);
+
+   
     initializeStack(stack);
 
     push(stack,createData("sandman"));

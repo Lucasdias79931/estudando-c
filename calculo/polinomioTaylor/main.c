@@ -9,8 +9,8 @@ int fatorial(int x) {
 }
 
 int main() {
-    double X = 9.12;
-    int a = 9;  // Ponto de expansão
+    double X = 151234.1233;
+    int a =151234 ;  // Ponto de expansão
 
     // Valor da função e das derivadas em X = 9
     double primitiva = sqrt(a);  // f(a) = sqrt(9)
@@ -20,7 +20,7 @@ int main() {
     double derivada4 = -15 / (16 * pow(a, 3.5));  // f''''(a)
 
     // Polinômio de Taylor até a quarta ordem
-    double resp = primitiva
+    double resp = primitiva 
                   + derivada1 * (X - a)
                   + (derivada2 * pow(X - a, 2)) / fatorial(2)
                   + (derivada3 * pow(X - a, 3)) / fatorial(3)
