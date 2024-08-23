@@ -32,6 +32,21 @@ int count(const char *str, const char *substr){
     return occurrence;
 }
 
+void reverse(char *str){
+    int size = strlen(str);
+
+    int i = 0, j = 0;
+
+    for(i = 0, j = size-1; j >= i; i++, j--){
+        char aux = str[i];
+        str[i] = str[j];
+        str[j] = aux;
+    }
+
+
+
+}
+
 // como strlen funciona
 int len(const char *str){
     int len = 0;
