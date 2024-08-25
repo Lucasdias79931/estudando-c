@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 
 
@@ -42,24 +43,51 @@ void bubbleSort(int vet[], int size){
 
 }
 
+void cBSort(char vet[]){
+    int size = strlen(vet);
+    int i = 0, j = 0;
+
+    for(i = 0; i < size - 1; i++){
+        for( j = i + 1; j < size; j++){
+            if(vet[i] > vet[j]){
+                int aux = vet[i];
+                vet[i] = vet[j];
+                vet[j] = aux;
+            }
+        }
+    }
+}
 
 
+void strBSort(char *vet[], int size) {
+    int i, j;
+    char *aux;
 
+    for (i = 0; i < size - 1; i++) {
+        for (j = i + 1; j < size; j++) {
+            if (strcmp(vet[i], vet[j]) > 0) {
+                aux = vet[i];
+                vet[i] = vet[j];
+                vet[j] = aux;
+            }
+        }
+    }
+}
 
 int main(){
 
-    int vetor[] = {5, 4, 4, 3, 2, 1};
-    int size = sizeof(vetor) / sizeof(vetor[0]);
-    bubbleSort(vetor, size);
-
+    char vetor[] = {'e','d','c','b','a','\0'};
     int i = 0;
 
+    cBSort(vetor);
+    
+
     printf("\n{");
-    for(i = 0; i < size; i++){
+    for(i = 0; i < strlen(vetor); i++){
 
-        printf("%i",vetor[i]);
+        printf("%c",vetor[i]);
 
-        if(i < size-1) printf(",");
+        if(i < strlen(vetor) - 1) printf(",");
     }
     printf("}\n");
 
