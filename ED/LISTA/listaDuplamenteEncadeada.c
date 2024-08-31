@@ -1,43 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
-typedef struct Data
+
+typedef struct 
 {
    char *book;
 } Data;
 
-typedef struct Node
+typedef struct 
 {   
-    struct Node *previous;
     Data *data;
+    struct Node *previous;
     struct Node *next;
 } Node;
 
-typedef struct End
-{
+typedef struct{
+    Node *ini;
     Node *end;
-} End;
+}List;
 
-void push(Node **ini, Data *data, End **end);
+
+void initialize(List *list);
+void push(List *list, Data *data);
 Data *creatData(char *book);
 int len(Node *ini);
 char *Index(Node *list, int ID);
 
 int main() {
-    setlocale(LC_ALL, "pt_BR.utf8");
-    Node *Books = NULL;
-    End *endList = NULL;
-
-    // Adicionando um livro e apontando para a lista de fim
-    push(&Books, creatData("sandman"), &endList); 
-    push(&Books, creatData("vademecum"), &endList);
     
-    printf("\n\n%s",Index(Books,1));
+   
+
+   
+    
+
     
     
     return 0;
+}
+
+void initialize(List *list){
+    if(!list){
+        list->ini = NULL;
+        list->end = NULL;
+    }
 }
 
 int len(Node *ini){
@@ -105,46 +111,32 @@ Data *creatData(char *book) {
     return newBook;
 }
 
-void push(Node **ini, Data *data, End **end) {
-    // Alocação de memória para o novo nó
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    
-
-    // Verificação se a alocação foi bem-sucedida
-    if (newNode == NULL) {
-        printf("\nErro na alocação de memória para novo nó!");
+void push(List *list, Data *data){
+    if(!list){
+        printf("\nLista não inicializada!");
         return;
     }
 
-    // Configurando os valores do novo nó
-    newNode->previous = NULL;
+    Node *newNode = malloc(sizeof(Node));
+
+    if(!newNode){
+        printf("\nerro de alocação de memoria");
+        return;
+    }
+
     newNode->data = data;
     newNode->next = NULL;
+    newNode->previous = NULL;
+    
 
-    // Verificando se a lista está vazia
-    if (*ini == NULL) {
-        // Se a lista está vazia, o novo nó será tanto o início quanto o fim da lista
-        *ini = newNode;
-
-
-        if (*end == NULL) {
-            *end = (End *)malloc(sizeof(End));
-            
-            if (*end == NULL) {
-                printf("\nErro na alocação de memória para o fim da lista!");
-                free(newNode);
-                return;
-            }
-        }
-
-        (*end)->end = newNode;
-
-       
-    } else {
-        
-        (*end)->end->next = newNode;
-        newNode->previous = (*end)->end;
-        (*end)->end = newNode; 
-        
+    if(list->end == NULL){
+        list->ini = newNode;
+        list->end = newNode;
+    }else{
+        newNode->previous = list->end;
+        list->end->next = newNode;
+        list->end = newNode;
     }
+
+    
 }
