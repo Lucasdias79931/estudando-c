@@ -41,11 +41,11 @@ int main() {
 }
 
 int len(Node *ini){
-    int tam = 0;
 
     if(ini == NULL){
         return 0;
     }
+    int tam = 0;
 
     while (ini != NULL)
     {
