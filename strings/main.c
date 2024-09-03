@@ -59,6 +59,8 @@ int len(const char *str){
     
 }
 
+
+
 int main() {
    /* char *palavra = join("lucas dos santos dias", "-");
     printf("\n%s\n", palavra);
