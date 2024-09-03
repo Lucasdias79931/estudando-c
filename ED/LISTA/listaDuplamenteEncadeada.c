@@ -1,46 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 
-typedef struct 
-{
+typedef struct {
    char *book;
 } Data;
 
-typedef struct 
-{   
+typedef struct Node {
     Data *data;
     struct Node *previous;
     struct Node *next;
 } Node;
 
-typedef struct{
+typedef struct {
     Node *ini;
     Node *end;
-}List;
-
+} List;
 
 void initialize(List *list);
 void push(List *list, Data *data);
 Data *creatData(char *book);
 int len(Node *ini);
 char *Index(Node *list, int ID);
+void bSort(List *list);
 
 int main() {
+    List *list = (List *)malloc(sizeof(List));
+    initialize(list);
     
-   
+    push(list, creatData("Watchmen"));
+    push(list, creatData("Sandman"));
+    push(list, creatData("Maus"));
+    push(list, creatData("Annie"));
 
-   
-    
+    Node *current = list->ini;
+    int cont = 1;
+    while (current != NULL) {  
+        printf("\nbook %i: %s", cont, current->data->book);
+        current = current->next;
+        cont++;
+    }
+
+    // Ordenando a lista
+    bSort(list);
 
     
-    
+    current = list->ini;
+    cont = 1;
+    printf("\n\nLista ordenada:\n");
+    while (current != NULL) { 
+        printf("book %i: %s\n", cont, current->data->book);
+        current = current->next;
+        cont++;
+    }
+
     return 0;
 }
 
-void initialize(List *list){
-    if(!list){
+// Ordena de forma Crescente;
+void bSort(List *list) {
+    if (list == NULL || list->ini == NULL || list->end == NULL) return;
+
+    Node *current = list->ini;
+
+    while (current != list->end) {
+        Node *next = current->next;
+        while (next != NULL) {
+            if (strcmp(current->data->book, next->data->book) > 0) {
+                Data *aux = current->data;
+                current->data = next->data;
+                next->data = aux;
+            }
+            next = next->next;
+        }
+        current = current->next;
+    }
+}
+
+void initialize(List *list) {
+    if (list == NULL) {
         list->ini = NULL;
         list->end = NULL;
     }
@@ -95,7 +135,6 @@ Data *creatData(char *book) {
         return NULL; // Retornando NULL em caso de erro
     }
     
-    // Alocação de memória para a string de livro, considerando o tamanho correto
     newBook->book = (char *)malloc((strlen(book) + 1) * sizeof(char));
 
     // Verificação se a alocação foi bem-sucedida
