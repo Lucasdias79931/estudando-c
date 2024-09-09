@@ -83,6 +83,7 @@ void strBSort(char *vet[], int size/*, int *interacoes*/) {
     }
 }
 
+
 int main(){
     char *pessoas[] = {"zema", "xak", "paulo", "well", "paulo", "ana","nzambi", "perlo", "alien", "beto"};
     int sizePessoas = sizeof(pessoas) / sizeof(pessoas[0]);
