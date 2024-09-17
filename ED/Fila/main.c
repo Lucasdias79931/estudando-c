@@ -14,6 +14,7 @@ typedef struct Node {
 } Node;
 
 typedef struct Fila {
+    int len;
     Node *front;
     Node *end;
 } Fila;
@@ -109,6 +110,8 @@ char *dequeue(Fila *fila){
         fila->front = fila->front->next;
     }
 
+    fila->len--;
+
     free(current->data->book);
     free(current->data);
     free(current);
@@ -141,9 +144,11 @@ void enqueue(Fila *fila, Data *data) {
     newNode->next = NULL;
 
     if (fila->front == NULL) {
+        fila->len = 1;
         fila->front = newNode;
         fila->end = newNode;
     } else {
+        fila->len++;
         fila->end->next = newNode;
         fila->end = newNode;
     }
@@ -152,15 +157,9 @@ void enqueue(Fila *fila, Data *data) {
 int len(Fila *fila) {
     if (fila == NULL || fila->front == NULL) return 0;
 
-    int cont = 0;
+    
 
-    Node *current = fila->front;
-    while (current != NULL) {
-        cont++;
-        current = current->next;
-    }
-
-    return cont;
+    return fila->len;
 }
 
 Data *createData(char *book) {
