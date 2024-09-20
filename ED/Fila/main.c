@@ -33,7 +33,7 @@ void clear(Fila *fila);
 int main() {
     Fila *books = (Fila *)malloc(sizeof(Fila)); // Aloca a memória para a fila
     initializeQueue(books);
-
+    
    
 
     enqueue(books, createData("sandman"));
