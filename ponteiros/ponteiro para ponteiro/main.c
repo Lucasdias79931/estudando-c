@@ -15,6 +15,8 @@ int main(){
     x=250;
     *p = 35;
     **q = 215;
+
+    
     
     printf("\n\n%d\n\n", **q);
     
