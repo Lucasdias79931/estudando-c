@@ -6,16 +6,24 @@
 
 
 // Adiciona um titulo ao array de titulos
+// passo um array triplo como parametro para ser possivel modificar o tamanho do meu arrey duplo '**titles'
 void addTitle(char ***titles, int *lenTitles, char *newTitle) {
     int sizeNewTitle = strlen(newTitle) + 1;
 
+
+    //como o *lentitles só vai ser igual a zero na primeir vez, deixei a condição '*lenTitles != 0' no primeir 'if'
     if (*lenTitles != 0) {
+
         *titles = realloc(*titles, sizeof(char*) * (*lenTitles + 1));
         (*lenTitles)++;
         (*titles)[*lenTitles - 1] = (char *)malloc(sizeof(char) * sizeNewTitle );
         strcpy((*titles)[*lenTitles - 1], newTitle);
     } else {
+        //aloca a primeira posição da matriz
         *titles = malloc(sizeof(char*));
+
+        //aloca o vetor individual apontado pela primeira posição da matriz
+        //a lógica é a mesma na parte de cima
         (*titles)[0] = (char *)malloc(sizeof(char) * sizeNewTitle );
         (*lenTitles)++;
         strcpy((*titles)[0], newTitle);
@@ -62,7 +70,7 @@ int main() {
     int lenTitles = 0;
 
   
-
+    //passo o endereço do meu ponteiro duplo que será apontado pelo ponteiro triplo da função
     pullFromFile("livros_com_quantidades",&titles,&lenTitles);
 
     for (int i = 0; i < lenTitles; i++) {
