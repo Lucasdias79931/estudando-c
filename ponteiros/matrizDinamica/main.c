@@ -65,6 +65,19 @@ void pullFromFile(char *File, char ***Title, int *lenTitle){
     fclose(file);
 }
 
+
+void bsort(char ***titles, int len){
+    for(int i = 0; i < len -1; i++){
+        for(int j = i + 1; j < len; j++){
+            if(strcmp((*titles)[i],(*titles)[j]) > 0){
+                char *swap = (*titles)[i];
+                (*titles)[i] = (*titles)[j];
+                (*titles)[j] = swap;
+            }
+        }
+    }
+}
+
 int main() {
     char **titles = NULL; //matriz dinamica
     int lenTitles = 0;
@@ -81,7 +94,16 @@ int main() {
 
     printf("\n");
 
-    
+    //depois de organizar
+
+    printf("############organizando com bSort###################");
+
+    bsort(&titles,lenTitles);
+
+    for (int i = 0; i < lenTitles; i++) {
+        printf("\n%s",titles[i]);
+        
+    }
     
     
     
