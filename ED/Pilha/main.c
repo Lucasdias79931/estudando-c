@@ -282,6 +282,8 @@ void reverse(Stack *stack){
 }
 
 
+
+
 void initializeStack(Stack *stack){
     stack->base = NULL;
     stack->top = NULL;
@@ -329,8 +331,9 @@ void push(Stack *stack, Data *data){
         stack->top->next = newNode;
         stack->top = newNode;  
     }
-
+    
 }
+
 
 
 char *pop(Stack *stack) {

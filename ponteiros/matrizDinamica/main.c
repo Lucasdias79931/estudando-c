@@ -10,7 +10,7 @@
 void addTitle(char ***titles, int *lenTitles, char *newTitle) {
     int sizeNewTitle = strlen(newTitle) + 1;
 
-
+ 
     //como o *lentitles só vai ser igual a zero na primeir vez, deixei a condição '*lenTitles != 0' no primeir 'if'
     if (*lenTitles != 0) {
 
@@ -34,7 +34,7 @@ void addTitle(char ***titles, int *lenTitles, char *newTitle) {
 void pullFromFile(char *File, char ***Title, int *lenTitle){
     //cria um ponteiro para um arquivo
     FILE *file;
-    
+
     //contatena o nome passado pelo parametro com '.txt' e escreve no vetor de char 'nameFile'
     char nameFile[100];
     strcpy(nameFile, File);
