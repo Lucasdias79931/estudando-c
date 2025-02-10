@@ -114,6 +114,7 @@ List *initialize(Data *data) {
         newList->ini->data = data;
         newList->ini->previous = NULL;
         newList->ini->next = NULL;
+        
         newList->end = newList->ini;
         newList->size = 1;
     }
