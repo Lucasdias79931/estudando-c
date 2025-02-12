@@ -9,6 +9,19 @@
 
 
 */
+typedef enum typeData{
+    // Tipos padrão
+    CHAR = 1,
+    INT = 2,
+    DOUBLE =3,
+    FLOAT = 4,
+    SHORT_INT =5,
+    UNSIGNED_INT = 6,
+    // Tipos criados pelo usuário
+    PESSOA = 7,
+    BOOK = 8
+}typeData;
+
 typedef struct Data {
     void *data;
 } Data;
