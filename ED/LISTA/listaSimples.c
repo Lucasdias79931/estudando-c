@@ -248,6 +248,7 @@ int len(List *ini){
 }
 
 
+
 void printList(List *ini){
    
     int element = 0;
