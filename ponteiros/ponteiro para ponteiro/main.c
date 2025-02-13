@@ -1,33 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+void funcao(int **piParametro){
+    printf("%d\n%d\n%d\n%d\n", &piParametro, piParametro, *piParametro, **piParametro);
+    
+}
 
 
 
 int main(){
-    
-    int x, *p, **q;
-
-    q = &p;
-    p = &x;
-
-    x=250;
-    *p = 35;
-    **q = 215;
-
-    
-    
-    printf("\n\n%d\n\n", **q);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    int *piVariavel = malloc(sizeof(int));
+    *piVariavel = 20;
+    funcao(&piVariavel);
     return 0;
 }
