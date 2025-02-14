@@ -34,275 +34,61 @@ const char *titulos[] = {
 
 
 
-typedef struct List
-{   
-    char nome[30];
-    struct List *next; 
+typedef struct Node{
+    int data;
+    Node next;
+}Node;
+
+
+typedef struct List{
+    Node *head;
+    Node *end;
+    int size;
 }List;
 
+List *initialize(int *data){
+    List *list = malloc(sizeof(List));
+    if(!list)return NULL;
+    
+    list->head = NULL;
+    list->end = NULL;
+    list->size = 0;
 
-List *reverse(List *head);
-void addLivro(List **ini, char *string);
-
-void printList(List *ini);
-
-int len(List *ini);
-
-void delet(List **ini, char *string);
-
-void update(List **ini, char *nome, char *newTitulo);
-
-void freeMemory(List **ini);
-
-int main(){
-    List *livro = NULL;
-    int tam = sizeof(titulos)/sizeof(titulos[0]);
-    char *string;
-    int i = 0;
-
-    int opcao;
-
-    /*do {
-        printf("\nMenu:\n");
-        printf("1. Adicionar livro\n");
-        printf("2.\n");
-        printf("3. Atualizar livro\n");
-        printf("4. Imprimir lista de livros\n");
-        printf("5. Imprimir tamanho da lista\n");
-        printf("0. Sair\n");
-        printf("Escolha uma opção: ");
-        scanf("%d", &opcao);
-        getchar(); 
-
-        switch (opcao) {
-            case 1:
-              
-                i = 0;
-                while (i == 0) {
-                    printf("\ndigite: ");
-                    string = (char *)malloc(30 * sizeof(char)); // Alocação corrigida
-                    if (string == NULL) {
-                        printf("Erro ao alocar memória.\n");
-                        return 1; // Saia do programa se a alocação falhar
-                    }
-                    fgets(string, 20, stdin);
-                    // Adicione seu código para addLivro aqui
-                    addLivro(&livro,string);
-                    printf("\n0 para sair: ");
-                    scanf("%d", &i);
-                    getchar(); // Limpa o buffer de entrada
-                }
-                
-                break;
-            case 2:
-               
-                break;
-            case 3:
-               
-                break;
-            case 4:
-                printList(livro);
-                break;
-             case 5:
-                printf("\nTamanho:%d",len(livro));
-                break;
-            case 0:
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opção inválida!\n");
+    if(data){
+        list->head = malloc(sizeof(Node));
+        if(!list->head){
+            free(list);
+            return NULL;
         }
-    } while (opcao != 0);*/
-   
 
+        
 
+        list->end = list->head;
+        list->head->data = *data;
+        list->head->next = NULL;
+        list->size = 1;    
+    }
 
-    addLivro(&livro,"sandman");
-    addLivro(&livro,"sqlserver");
-    addLivro(&livro,"ubunto");
-    printList(livro);
-
-    livro = reverse(livro);
-
-    printList(livro);
-
-
-
-    return 0;
+    return list;
 }
 
-List *reverse(List *head){
-    if(!head)return NULL;
+void reverse(List *list){
+    (!list || !list->head)return;
 
-    List *current = head;
-    List *next = NULL;
-    List *prev = NULL;
+    if(list->size < 2)return;
 
+    Node *current = list->head; 
+    Node *next = NULL;
+    Node *prev = NULL;
+    list->end = current;
 
     while(current){
         next = current->next;
         current->next = prev;
-        prev = current;    
+        prev = current;
         current = next;
-    }
-    head = prev;
-    return head;
-}
-
-void freeMemory(List **ini){
-    List *atual = *ini;
-    List *anterior = NULL;
-
-    while (atual != NULL)
-    {
-        anterior = atual;
-        atual = atual->next;
-        free(anterior);
-    }
-    
-    *ini = NULL;
-}
-
-void update(List **ini, char *titulo, char *newTitulo){
-    List *aux = *ini;
-
-    if(aux == NULL){
-        printf("Lista vazia!");
-        return;
-    }
-
-    if(strcmp(aux->nome,titulo)==0){
-        strcpy(aux->nome,newTitulo);
-        printf("\nAtualizado!");
-        return;
-    }
-
-    while (aux != NULL && strcmp(aux->nome,titulo)!=0)
-    {
-        aux = aux->next;
-    }
-
-    if(aux != NULL){
-        strcpy(aux->nome,newTitulo);
-        printf("\nAtualizado!");
-        return;
-    }
-
-    printf("\nItem não encontrado na lista!");
-    
-
-
-}
-
-
-
-void delet(List **ini, char *string) {
-    List *atual = *ini;
-    List *anterior = NULL;
-
-    if (atual == NULL) {
-        printf("\nErro de alocação!");
-        return;
-    }
-
-    if (strcmp(atual->nome, string) == 0) {
-        *ini = atual->next;
-        free(atual);
-        printf("\nDeletado!");
-        return;
-    }
-
-    while (atual != NULL && strcmp(atual->nome, string) != 0) {
-        anterior = atual;
-        atual = atual->next;
-    }
-
-    if (atual != NULL) {
-        anterior->next = atual->next;
-        free(atual);
-        printf("\nDeletado!");
-        return;
-    }
-
-    printf("\nItem não encontrado!");
-}
-
-
-int len(List *ini){
-    int element =0;
-    
-
-    if(ini  == NULL){
         
-        return element;
     }
 
-    while (ini  != NULL)
-    {
-       element++;
-       ini = ini ->next;
-    }
-
-    
-
-    return element;
-}
-
-
-
-void printList(List *ini){
-   
-    int element = 0;
-
-    if(ini == NULL){
-        
-        printf("\nLista vazia!");
-    }
-    
-    while (ini !=NULL){
-       printf("\n%s",ini ->nome);
-       printf("\nPosicao:%d\n",element);
-       element++;
-       ini = ini ->next;
-       
-    }
-    
-}
-
-void addLivro(List **ini, char *string){
-    List *atual = (List *)malloc(sizeof(List));
-
-    if(atual == NULL){
-        printf("\nErro de alocação!");
-        return;
-    }
-
-    strcpy(atual->nome,string);
-    atual->next = NULL;
-
-
-    if(*ini == NULL){
-       
-        *ini = atual;
-        printf("\nGravado com sucesso");
-    }else{
-
-        int no = 1;
-        
-
-        List *aux = *ini;                                                        
-                                                                               
-        while (aux->next != NULL) {
-
-            aux = aux->next;
-            printf("\nNo: %d",no);
-            no++;
-        }
-
-        aux->next = atual;
-        
-        printf("\nGravado com sucesso");
-
-       
-    }
+    list->head = prev;
 }
