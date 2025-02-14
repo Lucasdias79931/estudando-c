@@ -9,6 +9,8 @@
 
 
 */
+
+// Tentar implementar enum para identificar o tipo do dado. Não implementado ainda!
 typedef enum typeData{
     // Tipos padrão
     CHAR = 1,
