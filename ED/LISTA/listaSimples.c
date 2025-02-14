@@ -40,7 +40,8 @@ typedef struct List
     struct List *next; 
 }List;
 
-void reverese(List **init);
+
+List *reverse(List *head);
 void addLivro(List **ini, char *string);
 
 void printList(List *ini);
@@ -121,7 +122,7 @@ int main(){
     addLivro(&livro,"ubunto");
     printList(livro);
 
-    reverese(&livro);
+    livro = reverse(livro);
 
     printList(livro);
 
@@ -130,22 +131,22 @@ int main(){
     return 0;
 }
 
-void reverese(List **init){
-    if((*init)==NULL) return;
+List *reverse(List *head){
+    if(!head)return NULL;
 
+    List *current = head;
+    List *next = NULL;
     List *prev = NULL;
-    List *current = *init;
-    List *next_node = NULL;
 
-    while (current != NULL){
-        next_node = current->next;
+
+    while(current){
+        next = current->next;
         current->next = prev;
-        prev = current;
-        current = next_node;
+        prev = current;    
+        current = next;
     }
-    
-    *init = prev;
-    
+    head = prev;
+    return head;
 }
 
 void freeMemory(List **ini){
