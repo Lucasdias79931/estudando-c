@@ -35,7 +35,7 @@ typedef struct Node {
 } Node;
 
 typedef struct List {
-    Node *ini;
+    Node *head;
     Node *end;
     int size;
 } List;
@@ -46,7 +46,9 @@ List *initialize(Data *data);
 Data *createData(void *data, int size);
 // Adiciona um nó à lista
 void push(List *list, void *data);
+// reverse
 
+void reverse(List *list);
 
 
 
@@ -99,14 +101,14 @@ int main() {
         poderia liberar esse bloco dentro da função createData, MAS APENAS se tiver certesa que só passarar data alocada dinamicamente por parametro de createData;
     */
     
-    pessoa = (Pessoa *)(list->ini->data->data);
+    pessoa = (Pessoa *)(list->head->data->data);
     printf("\nfirst Item: nome:%s\tIdade:%d\n", pessoa->nome, pessoa->idade);
 
     Book *book = createBook("sandman",1973);
     push(list, createData(book, sizeof(Book)));
     free(book);
 
-    book = (Book *)(list->ini->next->data->data);
+    book = (Book *)(list->head->next->data->data);
     printf("\nseconde Item: nome:%s\tano:%d\n", book->nome, book->ano);
 
     return 0;
@@ -117,20 +119,20 @@ List *initialize(Data *data) {
     if (!newList) return NULL;
     
     if (data == NULL) {
-        newList->ini = NULL;
+        newList->head = NULL;
         newList->end = NULL;
         newList->size = 0;
     } else {
-        newList->ini = malloc(sizeof(Node));
-        if (!newList->ini) {
+        newList->head= malloc(sizeof(Node));
+        if (!newList->head) {
             free(newList);
             return NULL;
         }
-        newList->ini->data = data;
-        newList->ini->previous = NULL;
-        newList->ini->next = NULL;
+        newList->head->data = data;
+        newList->head->previous = NULL;
+        newList->head->next = NULL;
         
-        newList->end = newList->ini;
+        newList->end = newList->head;
         newList->size = 1;
     }
 
@@ -177,7 +179,7 @@ void push(List *list, void *data) {
     newNode->data = data;
     
     if (list->size == 0) {
-        list->ini = newNode;
+        list->head = newNode;
         list->end = newNode;
         list->size = 1;
     } else {
@@ -186,4 +188,25 @@ void push(List *list, void *data) {
         list->end = newNode;
         list->size++;
     }
+}
+
+void reverse(List *list){
+    if(!list || !list->head)return;
+
+    if(list->size < 2)return;
+
+    Node *current = list->head; 
+    Node *next = NULL;
+    Node *prev = NULL;
+    list->end = current;
+
+    while(current){
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        
+    }
+
+    list->head = prev;
 }
