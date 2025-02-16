@@ -52,17 +52,17 @@ int main(){
     
     //printf("\nposicao do livro 'paulo':%i ",search(stack,"paulo"));
 
-   /* printf("\ntamanho depois de 3 push:%d\n",size(stack));
-    printf("\n livro do topo:%s",peek(stack));
-
-    reverse(stack);
+    //printf("\ntamanho depois de 3 push:%d\n",size(stack));
+    //printf("\n livro do topo:%s",peek(stack));
     
-    printf("\n livro do topo depois de usar o reverse:%s\n",peek(stack));
-
-    clear(stack);
-    printf("\nStack depois de de clear:%d",size(stack));*/
+    //reverse(stack);
     
+    //printf("\n livro do topo depois de usar o reverse:%s\n",peek(stack));
 
+    //clear(stack);
+    //printf("\nStack depois de de clear:%d",size(stack));
+    
+    
     
     //copiar pilha:
     /*Stack *newStack = copyStack(stack);
@@ -71,8 +71,8 @@ int main(){
     printf("\n");
     printf("\nnew stack");
     print(newStack);
-    printf("\n");*/
-    
+    printf("\n");
+    */
     /*
     Stack *stackTwo = (Stack *) malloc(sizeof(Stack));
     initializeStack(stackTwo);
@@ -98,13 +98,13 @@ int main(){
     */
 
     
-    printf("\ninterando a partir da base até o top");
+    /*printf("\ninterando a partir da base até o top");
     int i = 0;
     for(i = 0; i< size(stack);i++){
         Node *current = iterate(stack,i);
 
         printf("\nNode %d, Book:%s",i+1,current->data->book);
-    }
+    }*/
 
     
     return 0;
@@ -264,19 +264,19 @@ void print(Stack *stack){
 void reverse(Stack *stack){
     if(stack->base == NULL || stack->base == stack->top) return;
 
-    Stack *aux = (Stack *)malloc(sizeof(Stack));
-    if(aux == NULL){
-        printf("\nErro de alocacao para stack auxiliar");
-        return;
-    }
-    initializeStack(aux);
-    while(stack->base != NULL)push(aux,createData(pop(stack)));
+    Node *base = stack->base;
+    Node *next = NULL;
+    Node *prev = NULL;
+    stack->top = base;
 
-    
-    while (aux->base != NULL){
-        push(stack,aux->base->data);
-        aux->base = aux->base->next;
+    while(base){
+        next = base->next;
+        base->next = prev;
+        prev = base;
+        base = next;
     }
+    stack->base = prev;
+
    
     
 }
