@@ -66,6 +66,21 @@ void printList(List *list){
     
 }
 
+void invert(List *list) {
+    No *current = list->ini;
+    No *temp = NULL;
+
+    while (current != NULL) {
+        temp = current->previous;
+        current->previous = current->next;
+        current->next = temp;
+        current = current->previous; 
+    }
+
+    if (temp != NULL) {
+        list->ini = temp->previous;
+    }
+}
 
 
 int main(){
@@ -80,5 +95,9 @@ int main(){
     printf("Na ordem\n");
     printList(numbers);
 
-    
+    printf("invertido\n");
+    invert(numbers);
+    printList(numbers);
+
+
 }
