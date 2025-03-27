@@ -24,15 +24,16 @@ Data *createData(char *book);
 int len(Fila *fila);
 void enqueue(Fila *fila, Data *data);
 void destroyFila(Fila *fila);
-void initializeQueue(Fila *fila);
+Fila *initializeQueue();
 char *front(Fila *fila);
 char *dequeue(Fila *fila);
 bool isEmpty(Fila *queue);
 void clear(Fila *fila);
+void reverse(Fila *fila);
 
 int main() {
-    Fila *books = (Fila *)malloc(sizeof(Fila)); // Aloca a memória para a fila
-    initializeQueue(books);
+    Fila *books = initializeQueue(); // Aloca a memória para a fila
+    
     
    
 
@@ -75,6 +76,27 @@ int main() {
     return 0;
 }
 
+
+
+void reverse(Fila *fila){
+    if(!fila)return;
+    if(!fila->end || !fila->end)return;
+
+    Node *current = fila->front;
+    Node *next = NULL;
+    Node *prev = NULL;
+
+    fila->end = fila->front;
+
+    while(current){
+        next = current->next;
+        current.next = prev;
+        prev = current;
+        current = next;
+    }
+
+    fila->front = prev;
+}
 
 void clear(Fila *fila){
     while (fila->front !=NULL)
@@ -128,9 +150,18 @@ char *front(Fila *fila){
 
     return fila->front->data->book;
 }
-void initializeQueue(Fila *fila){
+Fila *initializeQueue(){
+    Fila *fila = malloc(sizeof(Fila));
+    if(!fila){
+        printf("Erro em alocação de memória para fila!\n");
+        exit(1);
+    }
+
+
     fila->front = NULL;
     fila->end = NULL;
+
+    return fila;
 }
 
 void enqueue(Fila *fila, Data *data) {
@@ -144,14 +175,16 @@ void enqueue(Fila *fila, Data *data) {
     newNode->next = NULL;
 
     if (fila->front == NULL) {
-        fila->len = 1;
+        
         fila->front = newNode;
         fila->end = newNode;
     } else {
-        fila->len++;
+        
         fila->end->next = newNode;
         fila->end = newNode;
     }
+
+    fila->len++;
 }
 
 int len(Fila *fila) {
