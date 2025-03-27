@@ -36,7 +36,7 @@ const char *titulos[] = {
 
 typedef struct Node{
     int data;
-    Node next;
+    Node *next;
 }Node;
 
 
@@ -46,6 +46,7 @@ typedef struct List{
     int size;
 }List;
 
+//inicializa uma lista
 List *initialize(int *data){
     List *list = malloc(sizeof(List));
     if(!list)return NULL;
@@ -72,8 +73,9 @@ List *initialize(int *data){
     return list;
 }
 
+// inverte a lista original 
 void reverse(List *list){
-    (!list || !list->head)return;
+    if(!list || !list->head) return;
 
     if(list->size < 2)return;
 
@@ -92,3 +94,50 @@ void reverse(List *list){
 
     list->head = prev;
 }
+
+
+void push(List *list, int data){
+    Node *newNode = malloc(sizeof(Node));
+    if(!newNode){
+        printf("Erro em alocação de Node!\n");
+        exit(1);
+    }
+    
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if(list->end == NULL){
+        list->head = newNode;
+        list->end = list->head;
+    }else{
+        list->end->next = newNode;
+        list->end = newNode;
+    }
+
+    list->size += 1;
+
+}
+
+List *mergList(List *l1, List *l2){
+    if(!l1 || !l2) return NULL;
+    if(!l1->end || !l2->end) return NULL;
+
+    List *l3 = malloc(sizeof(List));
+
+    Node *current = l1->head;
+    while(current){
+        push(l3, current->data);
+        current = current->next;
+    }
+
+    current = l2->head;
+
+    while(current){
+        push(l3, current->data);
+        current = current->next;
+    }
+
+    return l3;
+}
+
+
