@@ -23,28 +23,26 @@ typedef struct Fila {
 Data *createData(char *book);
 int len(Fila *fila);
 void enqueue(Fila *fila, Data *data);
-void destroyFila(Fila *fila);
+void destroyQueue(Fila *fila);
 Fila *initializeQueue();
 char *front(Fila *fila);
 char *dequeue(Fila *fila);
 bool isEmpty(Fila *queue);
 void clear(Fila *fila);
 void reverse(Fila *fila);
+Fila *mergQueue(Fila *f1, Fila *f2);
 
 int main() {
     Fila *books = initializeQueue(); // Aloca a memória para a fila
-    
+    Fila *authors = initializeQueue();
     
    
 
     enqueue(books, createData("sandman"));
     enqueue(books, createData("sandman"));
-    enqueue(books, createData("sandman"));
-    enqueue(books, createData("sandman"));
-    enqueue(books, createData("sandman"));
-    enqueue(books, createData("sandman"));
+   
 
-    if(front(books)){
+    /*if(front(books)){
         printf("\nPrimeiro livro:%s",front(books));
     }else{
         printf("\nFila vazia");
@@ -66,13 +64,25 @@ int main() {
     }else{
         printf("\nFila vazia");
     }
-    printf("\nTamanho da fila: %d\n", len(books));
+    printf("\nTamanho da fila: %d\n", len(books));*/
 
 
+    enqueue(authors, createData("Niel Gaiman"));
+    enqueue(authors, createData("Stephen King"));
+   
+    Fila *books_authors = mergQueue(books, authors);
 
+    Node *current = books_authors->front;
 
-    destroyFila(books);
+    while(current){
+        printf("\n%s", current->data->book);
+        current = current->next;
+    }
 
+    destroyQueue(books);
+    destroyQueue(authors);
+    destroyQueue(books_authors);
+    printf("\n");
     return 0;
 }
 
@@ -90,7 +100,7 @@ void reverse(Fila *fila){
 
     while(current){
         next = current->next;
-        current.next = prev;
+        current->next = prev;
         prev = current;
         current = next;
     }
@@ -117,12 +127,12 @@ char *dequeue(Fila *fila){
 
     Node *current = fila->front;
     
-    char *book = (char *)malloc((strlen(fila->front->data->book) + 1) * sizeof(char)); // Aloca memória para o livro
+    char *book = fila->front->data->book;
     if (book == NULL) {
         printf("\nErro na alocação de memória para o livro!");
         return NULL;
     }
-    strcpy(book,current->data->book);
+    
 
     if(fila->end == fila->front){
         fila->end = NULL;
@@ -134,7 +144,7 @@ char *dequeue(Fila *fila){
 
     fila->len--;
 
-    free(current->data->book);
+    
     free(current->data);
     free(current);
     
@@ -148,8 +158,19 @@ char *front(Fila *fila){
         return NULL;
     }
 
-    return fila->front->data->book;
+    int size = strlen(fila->front->data->book) + 1;
+    char *data_front = malloc(sizeof(char) * size);
+
+    if(!data_front){
+        printf("Erro em alocação!\n");
+        return NULL;
+    }
+
+    strcpy(data_front, fila->front->data->book);
+
+    return data_front;
 }
+
 Fila *initializeQueue(){
     Fila *fila = malloc(sizeof(Fila));
     if(!fila){
@@ -196,7 +217,7 @@ int len(Fila *fila) {
 }
 
 Data *createData(char *book) {
-    Data *newBook = (Data *)malloc(sizeof(Data));
+    Data *newBook = malloc(sizeof(Data));
 
     if (newBook == NULL) {
         printf("\nErro na alocação de memória para novo livro!");
@@ -216,7 +237,7 @@ Data *createData(char *book) {
     return newBook;
 }
 
-void destroyFila(Fila *fila) {
+void destroyQueue(Fila *fila) {
     if (fila == NULL) return;
 
     Node *current = fila->front;
@@ -229,4 +250,31 @@ void destroyFila(Fila *fila) {
     }
 
     free(fila); // Libera a memória alocada para a fila
+}
+
+Fila *mergQueue(Fila *f1, Fila *f2){
+    if(!f1 || !f2)return NULL;
+    if(!f1->front || !f1->front)return NULL;
+
+    Fila *f3 = malloc(sizeof(Fila));
+    if(!f3){
+        printf("Erro ao tentar alocar memória para nova fila\n");
+        return NULL;
+    }
+
+    Node *current = f1->front;
+
+    while(current){
+        enqueue(f3,createData(current->data->book));
+        current = current->next;
+    }
+
+    current = f2->front;
+
+    while(current){
+        enqueue(f3,createData(current->data->book));
+        current = current->next;
+    }
+    
+    return f3;
 }
