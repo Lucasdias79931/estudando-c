@@ -24,6 +24,13 @@ typedef struct Tree {
     Type type;
 } Tree;
 
+typedef struct TREE{
+    Node *root;
+    Type type;
+    void *insert;
+    void *compare;
+}TREE;
+
 Tree *createTree(Type type) {
     Tree *tree = malloc(sizeof(Tree));
     if (!tree) {
@@ -85,6 +92,39 @@ void copyData(void **destineData, const void *originData, short int size) {
     memcpy(*destineData, originData, size);
 }
 
+void inorder(Node *root, Type type) {
+    if (root) {
+        inorder(root->left, type);
+
+        switch (type) {
+            case Integer:
+                printf(" %d", *(int *)root->data);
+                break;
+            case String:
+                printf(" %s", (char *)root->data);
+                break;
+            case Char:
+                printf(" %c", *(char *)root->data);
+                break;
+            case Float:
+                printf(" %f", *(float *)root->data);
+                break;
+            case Double:
+                printf(" %f", *(double *)root->data); 
+                break;
+            case Short_int:
+                printf(" %hd", *(short int *)root->data);
+                break;
+            default:
+                fprintf(stderr, "error in type\n");
+                return;
+        }
+        inorder(root->right, type);
+    }
+}
+
+
+
 void insert(Tree *tree, const void *data, Type type) {
     if (!tree || type != tree->type) {
         fprintf(stderr, "Tree is null or type mismatch\n");
@@ -123,4 +163,19 @@ void insert(Tree *tree, const void *data, Type type) {
     } else {
         parent->right = new_node;
     }
+}
+
+int main(){
+    Tree *tree = createTree(Integer);
+
+    for(int i = 5; i <= 20; i++){
+        int final = i;
+        if(i %2 == 0) final *=-1;
+        
+        insert(tree,&final,Integer);
+
+    }
+
+
+    inorder(tree->root, Integer);
 }
