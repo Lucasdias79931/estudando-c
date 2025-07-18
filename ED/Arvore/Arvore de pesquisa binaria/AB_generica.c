@@ -164,6 +164,38 @@ void insert(Tree *tree, const void *data, Type type) {
         parent->right = new_node;
     }
 }
+bool search(Tree *tree, void *value, Type type){
+    if(tree == NULL || tree->root == NULL) return false;
+
+    Node *current = tree->root;
+
+    while(current){
+        int cmp = compare(current->data, value, sizeData(value, type));
+
+        if(cmp < 0){
+            current = current->right;
+        } else if(cmp > 0){
+            current = current->left;
+        } else {
+            return true; 
+            
+        }
+    }
+
+    return false; 
+    
+}
+
+void invert(Node **root){
+    if(*root){
+        
+        Node *temp = (*root)->left;
+        (*root)->left = (*root)->right;
+        (*root)->right = temp;
+        invert(&(*root)->left);
+        invert(&(*root)->right);
+    }
+}
 
 int main(){
     Tree *tree = createTree(Integer);
@@ -176,6 +208,12 @@ int main(){
 
     }
 
-
+    
+    
+    printf("\n");
     inorder(tree->root, Integer);
+    printf("\n");
+    invert(&tree->root);
+    inorder(tree->root, Integer);
+    printf("\n");
 }
