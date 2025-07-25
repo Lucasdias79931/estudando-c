@@ -24,12 +24,8 @@ typedef struct Tree {
     Type type;
 } Tree;
 
-typedef struct TREE{
-    Node *root;
-    Type type;
-    void *insert;
-    void *compare;
-}TREE;
+
+
 
 Tree *createTree(Type type) {
     Tree *tree = malloc(sizeof(Tree));
@@ -42,7 +38,7 @@ Tree *createTree(Type type) {
     return tree;
 }
 
-
+ 
 short int compare(const void *data1, const void *data2, const Type type) {
     if (!data1 || !data2) {
         fprintf(stderr, "Data is NULL in compare\n");
@@ -164,6 +160,7 @@ void insert(Tree *tree, const void *data, Type type) {
         parent->right = new_node;
     }
 }
+
 bool search(Tree *tree, void *value, Type type){
     if(tree == NULL || tree->root == NULL) return false;
 
@@ -197,23 +194,44 @@ void invert(Node **root){
     }
 }
 
+/*Tree *arrayToTree(const void *array, const short int size, Type type){
+    Tree *tree = createTree(type);
+
+    short int i = size /2 - 1, j= size /2;
+    short int sizeElement = sizeData(array[0],type);
+   
+    
+    
+    while (i >= 0 && j < size -1)
+    {
+
+        void *left = malloc(sizeElement), *right = malloc(sizeElement);
+        copyData(left,&array[i], sizeElement);
+        copyData(right,&array[j++],sizeElement);
+        insert(tree,left,type);
+        insert(tree, right, type);
+    }
+
+    return tree;
+    
+    
+}*/
+
 int main(){
     Tree *tree = createTree(Integer);
-
-    for(int i = 5; i <= 20; i++){
-        int final = i;
-        if(i %2 == 0) final *=-1;
-        
-        insert(tree,&final,Integer);
-
+    int vector[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+    short int size = sizeof(vector) / sizeof(vector[0]);
+ 
+    for(int i = 15, j = -15; i >= 0 || j < 0; i--, j++){
+        insert(tree,&i,Integer);
+        if(j == i)continue;
+        insert(tree,&j,Integer);
     }
 
     
-    
-    printf("\n");
-    inorder(tree->root, Integer);
-    printf("\n");
-    invert(&tree->root);
-    inorder(tree->root, Integer);
+    for(int i = 0; i < size; i++){
+        insert(tree,&i,Integer);
+    }
+    inorder(tree->root,Integer);
     printf("\n");
 }
